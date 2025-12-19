@@ -1,35 +1,39 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+
 using namespace std;
 
-// Estados possíveis do robô
+// Estados do robô
 enum Estado {
     INICIALIZACAO,
     AGUARDANDO_SOLICITACAO,
+    IR_PARA_TORRE,
     VERIFICAR_DEMANDA,
     COLETAR_ENTULHO,
-    BUSCAR_MATERIAL,
     DESCARTE_ENTULHO,
+    BUSCAR_MATERIAL,
     ENTREGA_MATERIAL,
     MANUTENCAO,
     RETORNO_BASE,
     FINALIZADO
 };
 
-// Torres possíveis
+// Torres
 enum Torre {
     TORRE_A,
     TORRE_B
 };
 
-// Tipos de demanda
+// Demandas
 enum Demanda {
     ENTULHO,
     MATERIAL
 };
 
-// Funções simulando ações do robô
+// Funções de ação
 void testesIniciais() {
-    cout << "Realizando testes iniciais do robô...\n";
+    cout << "Testes iniciais do robô concluídos.\n";
 }
 
 void moverPara(string local) {
@@ -37,30 +41,32 @@ void moverPara(string local) {
 }
 
 void coletarEntulho() {
-    cout << "Coletando entulho...\n";
+    cout << "Abaixando pá e coletando entulho...\n";
 }
 
 void descartarEntulho() {
-    cout << "Descartando entulho na caixa estacionária...\n";
+    cout << "Despejando entulho na caixa estacionária.\n";
 }
 
 void buscarMaterial() {
-    cout << "Buscando material no almoxarifado...\n";
+    cout << "Coletando material no almoxarifado.\n";
 }
 
 void entregarMaterial(string torre) {
     cout << "Entregando material na " << torre << endl;
 }
 
-bool manutencaoNecessaria() {
-    return rand() % 2; // simula decisão
+bool falhaDetectada() {
+    return rand() % 2; // 50% chance de falha
 }
 
 void manutencaoPreventiva() {
-    cout << "Realizando manutenção preventiva...\n";
+    cout << "Manutenção preventiva realizada.\n";
 }
 
 int main() {
+    srand(time(NULL)); // inicializa aleatoriedade
+
     Estado estadoAtual = INICIALIZACAO;
     Torre torreSolicitante;
     Demanda demanda;
@@ -75,21 +81,23 @@ int main() {
             break;
 
         case AGUARDANDO_SOLICITACAO:
-            cout << "Solicitação recebida.\n";
-            torreSolicitante = TORRE_A;   // Exemplo
-            demanda = ENTULHO;            // Exemplo
+            torreSolicitante = (rand() % 2 == 0) ? TORRE_A : TORRE_B;
+            cout << "Solicitação recebida da "
+                 << (torreSolicitante == TORRE_A ? "Torre A" : "Torre B") << endl;
+            estadoAtual = IR_PARA_TORRE;
+            break;
+
+        case IR_PARA_TORRE:
+            moverPara(torreSolicitante == TORRE_A ? "Torre A" : "Torre B");
             estadoAtual = VERIFICAR_DEMANDA;
             break;
 
         case VERIFICAR_DEMANDA:
-            if (demanda == ENTULHO)
-                estadoAtual = COLETAR_ENTULHO;
-            else
-                estadoAtual = BUSCAR_MATERIAL;
+            demanda = (rand() % 2 == 0) ? ENTULHO : MATERIAL;
+            estadoAtual = (demanda == ENTULHO) ? COLETAR_ENTULHO : BUSCAR_MATERIAL;
             break;
 
         case COLETAR_ENTULHO:
-            moverPara(torreSolicitante == TORRE_A ? "Torre A" : "Torre B");
             coletarEntulho();
             estadoAtual = DESCARTE_ENTULHO;
             break;
@@ -97,7 +105,7 @@ int main() {
         case DESCARTE_ENTULHO:
             moverPara("Caixa Estacionária");
             descartarEntulho();
-            estadoAtual = MANUTENCAO;
+            estadoAtual = falhaDetectada() ? MANUTENCAO : RETORNO_BASE;
             break;
 
         case BUSCAR_MATERIAL:
@@ -108,23 +116,21 @@ int main() {
 
         case ENTREGA_MATERIAL:
             entregarMaterial(torreSolicitante == TORRE_A ? "Torre A" : "Torre B");
-            estadoAtual = MANUTENCAO;
+            estadoAtual = falhaDetectada() ? MANUTENCAO : RETORNO_BASE;
             break;
 
         case MANUTENCAO:
-            if (manutencaoNecessaria())
-                manutencaoPreventiva();
+            manutencaoPreventiva();
             estadoAtual = RETORNO_BASE;
             break;
 
         case RETORNO_BASE:
-            moverPara("Base Inicial");
+            moverPara("Posição Inicial");
             estadoAtual = FINALIZADO;
             break;
         }
     }
 
-    cout << "Ciclo finalizado.\n";
+    cout << "Ciclo de operação finalizado.\n";
     return 0;
 }
-
