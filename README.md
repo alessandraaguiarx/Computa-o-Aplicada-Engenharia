@@ -1,6 +1,6 @@
 Computação Aplicada à Engenharia
 
-Este repositório reúne o desenvolvimento de um projeto aplicado à Engenharia Civil, com foco na gestão de entulho em canteiros de obras por meio de Redes de Petri e automação robótica.
+Este repositório reúne o desenvolvimento de um projeto aplicado à Engenharia de Produção Civil, com foco na gestão de entulho em canteiros de obras por meio de Redes de Petri e automação robótica.
 
 O projeto contempla:
 
