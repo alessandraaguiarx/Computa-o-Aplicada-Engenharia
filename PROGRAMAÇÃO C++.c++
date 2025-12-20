@@ -1,3 +1,10 @@
+
+//COMPILADOR C++ 
+// https://www.onlinegdb.com/online_c++_compiler
+
+
+//INICIO DA PROGRAMAÇÃO
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
