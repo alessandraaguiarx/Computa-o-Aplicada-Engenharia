@@ -8,7 +8,7 @@ Simulação de uma Rede de Petri ordinária no HPETRISIM, utilizada para compree
 
 Modelagem de uma Rede de Petri Colorida no CPN IDE, permitindo a análise detalhada do funcionamento, do passo a passo do processo e da identificação de possíveis conflitos;
 
-Relatório técnico da montagem de um robô Otto bípede, elaborado no Overleaf, seguindo padrão acadêmico;
+Relatório técnico e Manual de montagem de um robô Otto bípede e Ninja, elaborado no Overleaf, seguindo padrão acadêmico;
 
 Modelagem 3D do robô Otto Ninja adaptado à construção civil, desenvolvida no Fusion 360;
 
